@@ -29,7 +29,7 @@ SHUFFLE:    lea     CARDS,a0                put the source array in a0
             lea     SHUFFLED,a1             put the destination array in a1
             move.b  #NUMCARDS,d0            put the number of cards in d0
             jsr     MEMCPY
-            rts                             we're done here
+            rts                             done here
 
 MEMCPY:     cmpi.b  #0,d0                   have we gotten to 0?
             blt.s   COPYDONE                yes, we're done here
@@ -40,7 +40,10 @@ COPYDONE:   rts
             
 ENDGAME:    move.b  #9,d0
             trap    #15         
+
             SIMHALT
+            
+            INCLUDE "randomize.X68"            
             
 * Put variables and constants here
 
@@ -51,10 +54,13 @@ MESSAGE:    dc.b    'Pyramid Solitaire',CR,LF     ASCII 0 terminated string
 
 NUMCARDS:   equ     52
 CARDS:      dc.b    0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52
-SHUFFLED:   ds.w    CARDS
+SHUFFLED:   ds.w    NUMCARDS
 SEED:       dc.l    49152                   This is the default, but can be changed later
 
+TIME_SINCE_MIDNIGHT_TRAP_CODE       EQU      8
+
     END    START        ; last line of source
+
 
 
 *~Font name~Courier New~
