@@ -6,4 +6,4 @@ clean:
 	del pyramid.prg
 
 pyramid.prg: pyramid.c
-	vc +tos pyramid.c -o pyramid.prg -lm
+	vc +tos pyramid.c -o pyramid.prg -lm -lgem 
