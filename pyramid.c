@@ -17,6 +17,9 @@ int deck[NUM_CARDS];
 
 #define CARD_ROWS 6
 
+#define SCREEN_WIDTH 640
+#define SCREEN_HEIGHT 200
+
 /*
 * how cards work -
 * take number of card (0-15)
@@ -132,8 +135,10 @@ void draw_card(int card, short x, short y)
     short pxy[] = {x, y, x + 50, y + 30};
     vsl_type(handle, 1);
     vsl_width(handle, 1);
-    vsl_color(handle, 1);
-    v_rbox(handle, pxy);
+    vsl_color(handle, G_BLACK);
+    vsf_interior(handle, 2);
+    vsf_perimeter(handle, 1);
+    v_rfbox(handle, pxy);
 
     switch (card_suit(card))
     {
@@ -174,6 +179,9 @@ void draw_board()
     int y = 0;
     for (int rows = 0; rows < 6; rows++)
     {
+        // calculate starting position
+        x = (SCREEN_WIDTH / 2) - (26 * (rows + 1));
+
         for (int row_card = 0; row_card <= rows; row_card++)
         {
             draw_card(deck[card_num++], x, y);
@@ -181,8 +189,7 @@ void draw_board()
             x = x + 52;
         }
 
-        y = y + 32;
-        x = 0;
+        y = y + 24;
     }
 }
 
